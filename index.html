@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prism.js Fetch Full HTML</title>
+
+  <!-- Prism CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<h1>Full HTML File as Code Snippet</h1>
+
+<!-- Code block where fetched HTML will appear -->
+<pre id="codeBlock" class="language-html"><code></code></pre>
+
+<!-- Prism JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+
+<script>
+  // Fetch the external HTML file
+  fetch('hello.html')
+    .then(response => response.text())
+    .then(data => {
+      // Escape HTML so it displays as code
+      const escaped = data.replace(/&/g, "&amp;")
+                          .replace(/</g, "&lt;")
+                          .replace(/>/g, "&gt;");
+      document.querySelector('#codeBlock code').innerHTML = escaped;
+
+      // Highlight with Prism
+      Prism.highlightElement(document.querySelector('#codeBlock code'));
+    })
+    .catch(err => console.error('Error fetching code:', err));
+</script>
+
+</body>
+</html>
